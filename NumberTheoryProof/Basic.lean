@@ -1,10 +1,27 @@
 import Mathlib.Algebra.Divisibility.Basic
+import Mathlib.Algebra.Ring.Basic
 import Mathlib.Data.Int.ModEq
 import Mathlib.Tactic.ModCases
 import Mathlib.Tactic.NormNum
 import Mathlib.Tactic.Ring
 
 open Int
+
+theorem pow_mod_2 (a : ℤ) (n : ℕ) (h: n > 0) : a^n ≡ a [ZMOD 2] := by
+  mod_cases k : a % 2
+  have k1: a ≡ 0 [ZMOD 2] := k
+  calc
+    a^n
+      ≡ 0^n [ZMOD 2] := by rel [ModEq.pow n k1]
+    _ ≡ 0 [ZMOD 2] := by rw [zero_pow h.ne']
+    _ ≡ a [ZMOD 2] := by rel [k1]
+
+  have k2: a ≡ 1 [ZMOD 2] := k
+  calc
+    a^n
+      ≡ 1^n [ZMOD 2] := by rel [ModEq.pow n k2]
+    _ ≡ 1 [ZMOD 2] := by norm_num
+    _ ≡ a [ZMOD 2] := by rel [k2]
 
 theorem problem_1 (n : ℤ) : 2 ∣ (3 * n^2 - 5 * n + 4) := by
   rw [← modEq_zero_iff_dvd]
@@ -175,12 +192,12 @@ theorem problem_8 (n : ℤ) : 2 ∣ (3 * n^3 - n) := by
     _ ≡ 0 [ZMOD 2] := by rw [modEq_iff_dvd]; norm_num
 
 theorem problem_9 (n : ℤ) : 2 ∣ (2 * n^3 - 6 * n^2 + 14 * n - 4) := by
-  have : 2 * n^3 - 6 * n^2 + 14 * n - 4 = 2 * (n^3 - 3 * n^2 + 7 * n - 2) := by ring
+  have : 2 * n^3 - 6 * n^2 + 14 * n - 4 = 2 * (n^3 - 3 * n^2 + 7 * n - 2) := by ring_nf
   rw [this]
   exact dvd_mul_right 2 (n^3 - 3 * n^2 + 7 * n - 2)
 
 theorem problem_10 (n : ℤ) : 4 * n^4 + 10 * n^3 - 12 ≡ 0 [ZMOD 2] := by
-  have : 4 * n^4 + 10 * n^3 - 12 = 2 * (2 * n^4 + 5 * n^3 - 6) := by ring
+  have : 4 * n^4 + 10 * n^3 - 12 = 2 * (2 * n^4 + 5 * n^3 - 6) := by ring_nf
   rw [this, modEq_zero_iff_dvd]
   exact dvd_mul_right 2 (2 * n^4 + 5 * n^3 - 6)
 
@@ -383,3 +400,27 @@ theorem problem_18 (n : ℤ) : 2 ∣ ((-9 * n^2 + 1) * (-12 * n^2 + 5) * n) := b
     (-9 * n^2 + 1) * (-12 * n^2 + 5) * n
       ≡ 0 * (-12 * n^2 + 5) * n [ZMOD 2] := by rel[h21]
     _ ≡ 0 [ZMOD 2] := by norm_num
+
+theorem problem_19 (a b : ℤ) (h: 2 ∣ (a^2 + b^2)) : a ≡ b [ZMOD 2] := by
+  rw [← modEq_zero_iff_dvd] at h
+  have h1: a^2 ≡ b^2 [ZMOD 2] := by
+    calc
+      a^2 = (a^2 + b^2) + b^2 - 2 * b^2 := by ring_nf
+      _   ≡ 0 + b^2 - 2 * b^2 [ZMOD 2] := by rel[h]
+      _   ≡ b^2 [ZMOD 2] := by rw [modEq_iff_dvd]; norm_num
+  calc
+    a ≡ a^2 [ZMOD 2] :=
+     (pow_mod_2 a 2 (by norm_num : 2 > 0)).symm
+    _ ≡ b^2 [ZMOD 2] := by rel[h1]
+    _ ≡ b [ZMOD 2] :=
+    pow_mod_2 b 2 (by norm_num : 2 > 0)
+
+theorem problem_20 (a b : ℤ) (h: a^3 ≡ 3 * b^5 [ZMOD 2]) : 2 ∣ (a-b) := by
+  rw [← modEq_iff_dvd]
+  calc
+    b ≡ b^5 [ZMOD 2] :=
+      (pow_mod_2 b 5 (by norm_num : 5 > 0)).symm
+    _ ≡ 3 * b^5 [ZMOD 2] := by rw[modEq_iff_dvd]; ring_nf; norm_num
+    _ ≡ a^3 [ZMOD 2] := by rel[h]
+    _ ≡ a [ZMOD 2] :=
+      pow_mod_2 a 3 (by norm_num : 3 > 0)

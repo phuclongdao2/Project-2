@@ -12,14 +12,14 @@ theorem pow_mod_2 (a : ℤ) (n : ℕ) (h: n > 0) : a^n ≡ a [ZMOD 2] := by
   have k1: a ≡ 0 [ZMOD 2] := k
   calc
     a^n
-      ≡ 0^n [ZMOD 2] := by rel [ModEq.pow n k1]
+      ≡ 0^n [ZMOD 2] := by rel [k1]
     _ ≡ 0 [ZMOD 2] := by rw [zero_pow h.ne']
     _ ≡ a [ZMOD 2] := by rel [k1]
 
   have k2: a ≡ 1 [ZMOD 2] := k
   calc
     a^n
-      ≡ 1^n [ZMOD 2] := by rel [ModEq.pow n k2]
+      ≡ 1^n [ZMOD 2] := by rel [k2]
     _ ≡ 1 [ZMOD 2] := by norm_num
     _ ≡ a [ZMOD 2] := by rel [k2]
 
@@ -28,19 +28,19 @@ theorem square_mod_3 (n : ℤ) : n^2 ≡ 0 [ZMOD 3] ∨ n^2 ≡ 1 [ZMOD 3] := by
   have h1: n ≡ 0 [ZMOD 3] := h
   left
   calc
-    n^2 ≡ 0^2 [ZMOD 3] := by rel[ModEq.pow 2 h]
+    n^2 ≡ 0^2 [ZMOD 3] := by rel[h]
     _ ≡ 0 [ZMOD 3] := by norm_num
 
   have h2: n ≡ 1 [ZMOD 3] := h
   right
   calc
-    n^2 ≡ 1^2 [ZMOD 3] := by rel[ModEq.pow 2 h]
+    n^2 ≡ 1^2 [ZMOD 3] := by rel[h]
     _ ≡ 1 [ZMOD 3] := by norm_num
 
   have h3: n ≡ 2 [ZMOD 3] := h
   right
   calc
-    n^2 ≡ 2^2 [ZMOD 3] := by rel[ModEq.pow 2 h]
+    n^2 ≡ 2^2 [ZMOD 3] := by rel[h]
     _ ≡ 1 [ZMOD 3] := by rw [modEq_iff_dvd]; norm_num
 
 theorem problem_1 (n : ℤ) : 2 ∣ (3 * n^2 - 5 * n + 4) := by
@@ -49,19 +49,13 @@ theorem problem_1 (n : ℤ) : 2 ∣ (3 * n^2 - 5 * n + 4) := by
   have h1: n ≡ 0 [ZMOD 2] := h
   calc
     3 * n^2 - 5 * n + 4
-      ≡ 3 * 0^2 - 5 * 0 + 4 [ZMOD 2] := by
-        rel [ModEq.mul_left 3 (ModEq.pow 2 h1),
-             ModEq.mul_left 5 h1
-            ]
+      ≡ 3 * 0^2 - 5 * 0 + 4 [ZMOD 2] := by rel [h1]
     _ ≡ 0 [ZMOD 2] := by rw [modEq_iff_dvd]; norm_num
 
   have h2: n ≡ 1 [ZMOD 2] := h
   calc
     3 * n^2 - 5 * n + 4
-      ≡ 3 * 1^2 - 5 * 1 + 4 [ZMOD 2] := by
-        rel [ModEq.mul_left 3 (ModEq.pow 2 h2),
-             ModEq.mul_left 5 h2
-            ]
+      ≡ 3 * 1^2 - 5 * 1 + 4 [ZMOD 2] := by rel [h2]
     _ ≡ 0 [ZMOD 2] := by rw [modEq_iff_dvd]; norm_num
 
 theorem problem_2 (n : ℤ) : -7 * n^2 + 11 * n + 8 ≡ 0 [ZMOD 2] := by
@@ -69,19 +63,13 @@ theorem problem_2 (n : ℤ) : -7 * n^2 + 11 * n + 8 ≡ 0 [ZMOD 2] := by
   have h1: n ≡ 0 [ZMOD 2] := h
   calc
     -7 * n^2 + 11 * n + 8
-      ≡ -7 * 0^2 + 11 * 0 + 8 [ZMOD 2] := by
-        rel [ModEq.mul_left (-7) (ModEq.pow 2 h1),
-             ModEq.mul_left 11 h1
-            ]
+      ≡ -7 * 0^2 + 11 * 0 + 8 [ZMOD 2] := by rel [h1]
     _ ≡ 0 [ZMOD 2] := by rw [modEq_iff_dvd]; norm_num
 
   have h2: n ≡ 1 [ZMOD 2] := h
   calc
     -7 * n^2 + 11 * n + 8
-      ≡ -7 * 1^2 + 11 * 1 + 8 [ZMOD 2] := by
-        rel [ModEq.mul_left (-7) (ModEq.pow 2 h2),
-             ModEq.mul_left 11 h2
-            ]
+      ≡ -7 * 1^2 + 11 * 1 + 8 [ZMOD 2] := by rel [h2]
     _ ≡ 0 [ZMOD 2] := by rw [modEq_iff_dvd]; norm_num
 
 theorem problem_3 (n : ℤ) : n^2 + 17 * n ≡ 0 [ZMOD 2] := by
@@ -89,19 +77,13 @@ theorem problem_3 (n : ℤ) : n^2 + 17 * n ≡ 0 [ZMOD 2] := by
   have h1: n ≡ 0 [ZMOD 2] := h
   calc
     n^2 + 17 * n
-      ≡ 0^2 + 17 * 0 [ZMOD 2] := by
-        rel [ModEq.pow 2 h1,
-             ModEq.mul_left 17 h1
-            ]
+      ≡ 0^2 + 17 * 0 [ZMOD 2] := by rel [h1]
     _ ≡ 0 [ZMOD 2] := by rw [modEq_iff_dvd]; norm_num
 
   have h2: n ≡ 1 [ZMOD 2] := h
   calc
     n^2 + 17 * n
-      ≡ 1^2 + 17 * 1 [ZMOD 2] := by
-        rel [ModEq.pow 2 h2,
-             ModEq.mul_left 17 h2
-            ]
+      ≡ 1^2 + 17 * 1 [ZMOD 2] := by rel [h2]
     _ ≡ 0 [ZMOD 2] := by rw [modEq_iff_dvd]; norm_num
 
 theorem problem_4 (n : ℤ) : 2 ∣ (5 * n^2 - n) := by
@@ -110,19 +92,13 @@ theorem problem_4 (n : ℤ) : 2 ∣ (5 * n^2 - n) := by
   have h1: n ≡ 0 [ZMOD 2] := h
   calc
     5 * n^2 - n
-      ≡ 5 * 0^2 - 0 [ZMOD 2] := by
-        rel [ModEq.mul_left 5 (ModEq.pow 2 h1),
-             h1
-            ]
+      ≡ 5 * 0^2 - 0 [ZMOD 2] := by rel [h1]
     _ ≡ 0 [ZMOD 2] := by rw [modEq_iff_dvd]; norm_num
 
   have h2: n ≡ 1 [ZMOD 2] := h
   calc
     5 * n^2 - n
-      ≡ 5 * 1^2 - 1 [ZMOD 2] := by
-        rel [ModEq.mul_left 5 (ModEq.pow 2 h2),
-             h2
-            ]
+      ≡ 5 * 1^2 - 1 [ZMOD 2] := by rel [h2]
     _ ≡ 0 [ZMOD 2] := by rw [modEq_iff_dvd]; norm_num
 
 theorem problem_5 (n : ℤ) : 2 ∣ (3 * n^3 - 2 * n^2 + 3 * n - 4) := by
@@ -131,21 +107,13 @@ theorem problem_5 (n : ℤ) : 2 ∣ (3 * n^3 - 2 * n^2 + 3 * n - 4) := by
   have h1: n ≡ 0 [ZMOD 2] := h
   calc
     3 * n^3 - 2 * n^2 + 3 * n - 4
-      ≡ 3 * 0^3 - 2 * 0^2 + 3 * 0 - 4 [ZMOD 2] := by
-        rel [ModEq.mul_left 3 (ModEq.pow 3 h1),
-             ModEq.mul_left 2 (ModEq.pow 2 h1),
-             ModEq.mul_left 3 h1
-            ]
+      ≡ 3 * 0^3 - 2 * 0^2 + 3 * 0 - 4 [ZMOD 2] := by rel [h1]
     _ ≡ 0 [ZMOD 2] := by rw [modEq_iff_dvd]; norm_num
 
   have h2: n ≡ 1 [ZMOD 2] := h
   calc
     3 * n^3 - 2 * n^2 + 3 * n - 4
-      ≡ 3 * 1^3 - 2 * 1^2 + 3 * 1 - 4 [ZMOD 2] := by
-        rel [ModEq.mul_left 3 (ModEq.pow 3 h2),
-             ModEq.mul_left 2 (ModEq.pow 2 h2),
-             ModEq.mul_left 3 h2
-            ]
+      ≡ 3 * 1^3 - 2 * 1^2 + 3 * 1 - 4 [ZMOD 2] := by rel [h2]
     _ ≡ 0 [ZMOD 2] := by rw [modEq_iff_dvd]; norm_num
 
 theorem problem_6 (n : ℤ) : -10 * n^3 - n^2 + 5 * n - 19 ≡ 1 [ZMOD 2] := by
@@ -153,21 +121,13 @@ theorem problem_6 (n : ℤ) : -10 * n^3 - n^2 + 5 * n - 19 ≡ 1 [ZMOD 2] := by
   have h1: n ≡ 0 [ZMOD 2] := h
   calc
     -10 * n^3 - n^2 + 5 * n - 19
-      ≡ -10 * 0^3 - 0^2 + 5 * 0 - 19 [ZMOD 2] := by
-        rel [ModEq.mul_left (-10) (ModEq.pow 3 h1),
-             ModEq.pow 2 h1,
-             ModEq.mul_left 5 h1
-            ]
+      ≡ -10 * 0^3 - 0^2 + 5 * 0 - 19 [ZMOD 2] := by rel [h1]
     _ ≡ 1 [ZMOD 2] := by rw [modEq_iff_dvd]; norm_num
 
   have h2: n ≡ 1 [ZMOD 2] := h
   calc
     -10 * n^3 - n^2 + 5 * n - 19
-      ≡ -10 * 1^3 - 1^2 + 5 * 1 - 19 [ZMOD 2] := by
-        rel [ModEq.mul_left (-10) (ModEq.pow 3 h2),
-             ModEq.pow 2 h2,
-             ModEq.mul_left 5 h2
-            ]
+      ≡ -10 * 1^3 - 1^2 + 5 * 1 - 19 [ZMOD 2] := by rel [h2]
     _ ≡ 1 [ZMOD 2] := by rw [modEq_iff_dvd]; norm_num
 
 theorem problem_7 (n : ℤ) : -n^3 + 5 * n^2 + 3 ≡ 1 [ZMOD 2] := by
@@ -175,19 +135,13 @@ theorem problem_7 (n : ℤ) : -n^3 + 5 * n^2 + 3 ≡ 1 [ZMOD 2] := by
   have h1: n ≡ 0 [ZMOD 2] := h
   calc
     -n^3 + 5 * n^2 + 3
-      ≡ -0^3 + 5 * 0^2 + 3 [ZMOD 2] := by
-        rel [ModEq.pow 3 h1,
-             ModEq.mul_left 5 (ModEq.pow 2 h1)
-            ]
+      ≡ -0^3 + 5 * 0^2 + 3 [ZMOD 2] := by rel [h1]
     _ ≡ 1 [ZMOD 2] := by rw [modEq_iff_dvd]; norm_num
 
   have h2: n ≡ 1 [ZMOD 2] := h
   calc
     -n^3 + 5 * n^2 + 3
-      ≡ -1^3 + 5 * 1^2 + 3 [ZMOD 2] := by
-        rel [ModEq.pow 3 h2,
-             ModEq.mul_left 5 (ModEq.pow 2 h2)
-            ]
+      ≡ -1^3 + 5 * 1^2 + 3 [ZMOD 2] := by rel [h2]
     _ ≡ 1 [ZMOD 2] := by rw [modEq_iff_dvd]; norm_num
 
 theorem problem_8 (n : ℤ) : 2 ∣ (3 * n^3 - n) := by
@@ -196,19 +150,13 @@ theorem problem_8 (n : ℤ) : 2 ∣ (3 * n^3 - n) := by
   have h1: n ≡ 0 [ZMOD 2] := h
   calc
     3 * n^3 - n
-      ≡ 3 * 0^3 - 0 [ZMOD 2] := by
-        rel [ModEq.mul_left 3 (ModEq.pow 3 h1),
-             h1
-            ]
+      ≡ 3 * 0^3 - 0 [ZMOD 2] := by rel [h1]
     _ ≡ 0 [ZMOD 2] := by rw [modEq_iff_dvd]; norm_num
 
   have h2: n ≡ 1 [ZMOD 2] := h
   calc
     3 * n^3 - n
-      ≡ 3 * 1^3 - 1 [ZMOD 2] := by
-        rel [ModEq.mul_left 3 (ModEq.pow 3 h2),
-             h2
-            ]
+      ≡ 3 * 1^3 - 1 [ZMOD 2] := by rel [h2]
     _ ≡ 0 [ZMOD 2] := by rw [modEq_iff_dvd]; norm_num
 
 theorem problem_9 (n : ℤ) : 2 ∣ (2 * n^3 - 6 * n^2 + 14 * n - 4) := by
@@ -228,8 +176,7 @@ theorem problem_11 (n : ℤ) : 2 ∣ ((3 * n + 5) * (5 * n - 4)) := by
   have h11 : 5 * n - 4 ≡ 0 [ZMOD 2] := by
     calc
       5 * n - 4
-        ≡ 5 * 0 - 4 [ZMOD 2] := by
-          rel [ModEq.mul_left 5 h1]
+        ≡ 5 * 0 - 4 [ZMOD 2] := by rel [h1]
       _ ≡ 0 [ZMOD 2] := by rw [modEq_iff_dvd]; norm_num
   calc
     (3 * n + 5) * (5 * n - 4)
@@ -240,8 +187,7 @@ theorem problem_11 (n : ℤ) : 2 ∣ ((3 * n + 5) * (5 * n - 4)) := by
   have h21 : 3 * n + 5 ≡ 0 [ZMOD 2] := by
     calc
       3 * n + 5
-        ≡ 3 * 1 + 5 [ZMOD 2] := by
-          rel [ModEq.mul_left 3 h2]
+        ≡ 3 * 1 + 5 [ZMOD 2] := by rel [h2]
       _ ≡ 0 [ZMOD 2] := by rw [modEq_iff_dvd]; norm_num
   calc
     (3 * n + 5) * (5 * n - 4)
@@ -261,8 +207,7 @@ theorem problem_12 (n : ℤ) : 2 ∣ ((-7 * n - 9) * n) := by
   have h21 : -7 * n - 9 ≡ 0 [ZMOD 2] := by
     calc
       -7 * n - 9
-        ≡ -7 * 1 - 9 [ZMOD 2] := by
-          rel [ModEq.mul_left (-7) h2]
+        ≡ -7 * 1 - 9 [ZMOD 2] := by rel [h2]
       _ ≡ 0 [ZMOD 2] := by rw [modEq_iff_dvd]; norm_num
   calc
     (-7 * n - 9) * n
@@ -282,8 +227,7 @@ theorem problem_13 (n : ℤ) : n * (n^2 + 1) * (n^3 + 2) ≡ 0 [ZMOD 2] := by
   have h21: n^2 + 1 ≡ 0 [ZMOD 2] := by
     calc
       n^2 + 1
-        ≡ 1^2 + 1 [ZMOD 2] := by
-          rel [ModEq.pow 2 h2]
+        ≡ 1^2 + 1 [ZMOD 2] := by rel [h2]
       _ ≡ 0 [ZMOD 2] := by rw [modEq_iff_dvd]; norm_num
   calc
     n * (n^2 + 1) * (n^3 + 2)
@@ -297,8 +241,7 @@ theorem problem_14 (n : ℤ) : (n^4 - 2 * n + 3) * (n^2 + 2) * (n^3 + n + 1) ≡
   have h11: n^2 + 2 ≡ 0 [ZMOD 2] := by
     calc
       n^2 + 2
-        ≡ 0^2 + 2 [ZMOD 2] := by
-          rel [ModEq.pow 2 h1]
+        ≡ 0^2 + 2 [ZMOD 2] := by rel [h1]
       _ ≡ 0 [ZMOD 2] := by rw [modEq_iff_dvd]; norm_num
   calc
     (n^4 - 2 * n + 3) * (n^2 + 2) * (n^3 + n + 1)
@@ -310,9 +253,7 @@ theorem problem_14 (n : ℤ) : (n^4 - 2 * n + 3) * (n^2 + 2) * (n^3 + n + 1) ≡
   have h21: n^4 - 2 * n + 3 ≡ 0 [ZMOD 2] := by
     calc
       n^4 - 2 * n + 3
-        ≡ 1^4 - 2 * 1 + 3 [ZMOD 2] := by
-          rel [ModEq.pow 4 h2,
-               ModEq.mul_left 2 h2]
+        ≡ 1^4 - 2 * 1 + 3 [ZMOD 2] := by rel [h2]
       _ ≡ 0 [ZMOD 2] := by rw [modEq_iff_dvd]; norm_num
   calc
     (n^4 - 2 * n + 3) * (n^2 + 2) * (n^3 + n + 1)
@@ -326,9 +267,7 @@ theorem problem_15 (n : ℤ) : (n^2 - n + 3) * (3 * n^3 + 4 * n^2 + 2) * (-n^3 -
   have h11: 3 * n^3 + 4 * n^2 + 2 ≡ 0 [ZMOD 2] := by
     calc
       3 * n^3 + 4 * n^2 + 2
-        ≡ 3 * 0^3 + 4 * 0^2 + 2 [ZMOD 2] := by
-          rel [ModEq.mul_left 3 (ModEq.pow 3 h1),
-               ModEq.mul_left 4 (ModEq.pow 2 h1)]
+        ≡ 3 * 0^3 + 4 * 0^2 + 2 [ZMOD 2] := by rel [h1]
       _ ≡ 0 [ZMOD 2] := by rw [modEq_iff_dvd]; norm_num
   calc
     (n^2 - n + 3) * (3 * n^3 + 4 * n^2 + 2) * (-n^3 - 2 * n^2 - 1)
@@ -340,9 +279,7 @@ theorem problem_15 (n : ℤ) : (n^2 - n + 3) * (3 * n^3 + 4 * n^2 + 2) * (-n^3 -
   have h21: -n^3 - 2 * n^2 - 1 ≡ 0 [ZMOD 2] := by
     calc
       -n^3 - 2 * n^2 - 1
-        ≡ -1^3 - 2 * 1^2 - 1 [ZMOD 2] := by
-          rel [ModEq.pow 3 h2,
-               ModEq.mul_left 2 (ModEq.pow 2 h2)]
+        ≡ -1^3 - 2 * 1^2 - 1 [ZMOD 2] := by rel [h2]
       _ ≡ 0 [ZMOD 2] := by rw [modEq_iff_dvd]; norm_num
   calc
     (n^2 - n + 3) * (3 * n^3 + 4 * n^2 + 2) * (-n^3 - 2 * n^2 - 1)
@@ -357,8 +294,7 @@ theorem problem_16 (n : ℤ) : 2 ∣ ((3 * n^2 - 5 * n + 1) * (-5 * n^3 + 1) * (
   have h11: 7 * n^4 - 4 ≡ 0 [ZMOD 2] := by
     calc
       7 * n^4 - 4
-        ≡ 7 * 0^4 - 4 [ZMOD 2] := by
-          rel [ModEq.mul_left 7 (ModEq.pow 4 h1)]
+        ≡ 7 * 0^4 - 4 [ZMOD 2] := by rel [h1]
       _ ≡ 0 [ZMOD 2] := by rw [modEq_iff_dvd]; norm_num
   calc
     (3 * n^2 - 5 * n + 1) * (-5 * n^3 + 1) * (7 * n^4 - 4)
@@ -370,8 +306,7 @@ theorem problem_16 (n : ℤ) : 2 ∣ ((3 * n^2 - 5 * n + 1) * (-5 * n^3 + 1) * (
   have h21: -5 * n^3 + 1 ≡ 0 [ZMOD 2] := by
     calc
       -5 * n^3 + 1
-        ≡ -5 * 1^3 + 1 [ZMOD 2] := by
-          rel [ModEq.mul_left (-5) (ModEq.pow 3 h2)]
+        ≡ -5 * 1^3 + 1 [ZMOD 2] := by rel [h2]
       _ ≡ 0 [ZMOD 2] := by rw [modEq_iff_dvd]; norm_num
   calc
     (3 * n^2 - 5 * n + 1) * (-5 * n^3 + 1) * (7 * n^4 - 4)
@@ -392,8 +327,7 @@ theorem problem_17 (n : ℤ) : 2 ∣ (n * (-2 * n^2 + 1) * (-5 * n^2 + 3)) := by
   have h21: -5 * n^2 + 3 ≡ 0 [ZMOD 2] := by
     calc
       -5 * n^2 + 3
-        ≡ -5 * 1^2 + 3 [ZMOD 2] := by
-          rel [ModEq.mul_left (-5) (ModEq.pow 2 h2)]
+        ≡ -5 * 1^2 + 3 [ZMOD 2] := by rel [h2]
       _ ≡ 0 [ZMOD 2] := by rw [modEq_iff_dvd]; norm_num
   calc
     n * (-2 * n^2 + 1) * (-5 * n^2 + 3)
@@ -413,8 +347,7 @@ theorem problem_18 (n : ℤ) : 2 ∣ ((-9 * n^2 + 1) * (-12 * n^2 + 5) * n) := b
   have h21: -9 * n^2 + 1 ≡ 0 [ZMOD 2] := by
     calc
       -9 * n^2 + 1
-        ≡ -9 * 1^2 + 1 [ZMOD 2] := by
-          rel [ModEq.mul_left (-9) (ModEq.pow 2 h2)]
+        ≡ -9 * 1^2 + 1 [ZMOD 2] := by rel [h2]
       _ ≡ 0 [ZMOD 2] := by rw [modEq_iff_dvd]; norm_num
   calc
     (-9 * n^2 + 1) * (-12 * n^2 + 5) * n
@@ -451,27 +384,21 @@ theorem problem_21 (n : ℤ) : n^2 - 2 * n + 5 ≡ 1 [ZMOD 3] ∨ n^2 - 2 * n + 
   right
   calc
     n^2 - 2 * n + 5
-      ≡ 0^2 - 2 * 0 + 5 [ZMOD 3] := by
-        rel[ModEq.pow 2 h1,
-            ModEq.mul_left 2 h1]
+      ≡ 0^2 - 2 * 0 + 5 [ZMOD 3] := by rel[h1]
     _ ≡ 2 [ZMOD 3] := by rw[modEq_iff_dvd]; norm_num
 
   have h2: n ≡ 1 [ZMOD 3] := h
   left
   calc
     n^2 - 2 * n + 5
-      ≡ 1^2 - 2 * 1 + 5 [ZMOD 3] := by
-        rel[ModEq.pow 2 h2,
-            ModEq.mul_left 2 h2]
+      ≡ 1^2 - 2 * 1 + 5 [ZMOD 3] := by rel[h2]
     _ ≡ 1 [ZMOD 3] := by rw[modEq_iff_dvd]; norm_num
 
   have h3: n ≡ 2 [ZMOD 3] := h
   right
   calc
     n^2 - 2 * n + 5
-      ≡ 2^2 - 2 * 2 + 5 [ZMOD 3] := by
-        rel[ModEq.pow 2 h3,
-            ModEq.mul_left 2 h3]
+      ≡ 2^2 - 2 * 2 + 5 [ZMOD 3] := by rel[h3]
     _ ≡ 2 [ZMOD 3] := by rw[modEq_iff_dvd]; norm_num
 
 theorem problem_22 (n : ℤ) : n^3 - 5 * n^2 ≡ 0 [ZMOD 3] ∨ n^3 - 5 * n^2 ≡ 2 [ZMOD 3] := by
@@ -480,27 +407,21 @@ theorem problem_22 (n : ℤ) : n^3 - 5 * n^2 ≡ 0 [ZMOD 3] ∨ n^3 - 5 * n^2 �
   left
   calc
     n^3 - 5 * n^2
-      ≡ 0^3 - 5 * 0^2 [ZMOD 3] := by
-        rel[ModEq.pow 3 h1,
-            ModEq.mul_left 5 (ModEq.pow 2 h1)]
+      ≡ 0^3 - 5 * 0^2 [ZMOD 3] := by rel[h1]
     _ ≡ 0 [ZMOD 3] := by rw[modEq_iff_dvd]; norm_num
 
   have h2: n ≡ 1 [ZMOD 3] := h
   right
   calc
     n^3 - 5 * n^2
-      ≡ 1^3 - 5 * 1^2 [ZMOD 3] := by
-        rel[ModEq.pow 3 h2,
-            ModEq.mul_left 5 (ModEq.pow 2 h2)]
+      ≡ 1^3 - 5 * 1^2 [ZMOD 3] := by rel[h2]
     _ ≡ 2 [ZMOD 3] := by rw[modEq_iff_dvd]; norm_num
 
   have h3: n ≡ 2 [ZMOD 3] := h
   left
   calc
     n^3 - 5 * n^2
-      ≡ 2^3 - 5 * 2^2 [ZMOD 3] := by
-        rel[ModEq.pow 3 h3,
-            ModEq.mul_left 5 (ModEq.pow 2 h3)]
+      ≡ 2^3 - 5 * 2^2 [ZMOD 3] := by rel[h3]
     _ ≡ 0 [ZMOD 3] := by rw[modEq_iff_dvd]; norm_num
 
 theorem problem_23 (n : ℤ) : ¬ (3 ∣ (7 * n^2 - 2 * n - 10)) := by
@@ -511,9 +432,7 @@ theorem problem_23 (n : ℤ) : ¬ (3 ∣ (7 * n^2 - 2 * n - 10)) := by
   have h11: 7 * n^2 - 2 * n - 10 ≡ 2 [ZMOD 3] := by
     calc
       7 * n^2 - 2 * n - 10
-        ≡ 7 * 0^2 - 2 * 0 - 10 [ZMOD 3] := by
-          rel[ModEq.mul_left 7 (ModEq.pow 2 h1),
-              ModEq.mul_left 2 h1]
+        ≡ 7 * 0^2 - 2 * 0 - 10 [ZMOD 3] := by rel[h1]
       _ ≡ 2 [ZMOD 3] := by rw[modEq_iff_dvd]; norm_num
   have contradiction := h_div.symm.trans h11
   rw [modEq_iff_dvd] at contradiction
@@ -523,9 +442,7 @@ theorem problem_23 (n : ℤ) : ¬ (3 ∣ (7 * n^2 - 2 * n - 10)) := by
   have h21: 7 * n^2 - 2 * n - 10 ≡ 1 [ZMOD 3] := by
     calc
       7 * n^2 - 2 * n - 10
-        ≡ 7 * 1^2 - 2 * 1 - 10 [ZMOD 3] := by
-          rel[ModEq.mul_left 7 (ModEq.pow 2 h2),
-              ModEq.mul_left 2 h2]
+        ≡ 7 * 1^2 - 2 * 1 - 10 [ZMOD 3] := by rel[h2]
       _ ≡ 1 [ZMOD 3] := by rw[modEq_iff_dvd]; norm_num
   have contradiction := h_div.symm.trans h21
   rw [modEq_iff_dvd] at contradiction
@@ -535,9 +452,7 @@ theorem problem_23 (n : ℤ) : ¬ (3 ∣ (7 * n^2 - 2 * n - 10)) := by
   have h31: 7 * n^2 - 2 * n - 10 ≡ 2 [ZMOD 3] := by
     calc
       7 * n^2 - 2 * n - 10
-        ≡ 7 * 2^2 - 2 * 2 - 10 [ZMOD 3] := by
-          rel[ModEq.mul_left 7 (ModEq.pow 2 h3),
-              ModEq.mul_left 2 h3]
+        ≡ 7 * 2^2 - 2 * 2 - 10 [ZMOD 3] := by rel[h3]
       _ ≡ 2 [ZMOD 3] := by rw[modEq_iff_dvd]; norm_num
   have contradiction := h_div.symm.trans h31
   rw [modEq_iff_dvd] at contradiction
@@ -550,9 +465,7 @@ theorem problem_24 (n : ℤ) : ¬(-4 * n^3 - n^2 + 1 ≡ 0 [ZMOD 3]) := by
   have h11: -4 * n^3 - n^2 + 1 ≡ 1 [ZMOD 3] := by
     calc
       -4 * n^3 - n^2 + 1
-        ≡ -4 * 0^3 - 0^2 + 1 [ZMOD 3] := by
-          rel[ModEq.mul_left (-4) (ModEq.pow 3 h1),
-              ModEq.pow 2 h1]
+        ≡ -4 * 0^3 - 0^2 + 1 [ZMOD 3] := by rel[h1]
       _ ≡ 1 [ZMOD 3] := by rw[modEq_iff_dvd]; norm_num
   have contradiction := h_div.symm.trans h11
   rw [modEq_iff_dvd] at contradiction
@@ -562,9 +475,7 @@ theorem problem_24 (n : ℤ) : ¬(-4 * n^3 - n^2 + 1 ≡ 0 [ZMOD 3]) := by
   have h21: -4 * n^3 - n^2 + 1 ≡ 2 [ZMOD 3] := by
     calc
       -4 * n^3 - n^2 + 1
-        ≡ -4 * 1^3 - 1^2 + 1 [ZMOD 3] := by
-          rel[ModEq.mul_left (-4) (ModEq.pow 3 h2),
-              ModEq.pow 2 h2]
+        ≡ -4 * 1^3 - 1^2 + 1 [ZMOD 3] := by rel[h2]
       _ ≡ 2 [ZMOD 3] := by rw[modEq_iff_dvd]; norm_num
   have contradiction := h_div.symm.trans h21
   rw [modEq_iff_dvd] at contradiction
@@ -574,9 +485,7 @@ theorem problem_24 (n : ℤ) : ¬(-4 * n^3 - n^2 + 1 ≡ 0 [ZMOD 3]) := by
   have h31: -4 * n^3 - n^2 + 1 ≡ 1 [ZMOD 3] := by
     calc
       -4 * n^3 - n^2 + 1
-        ≡ -4 * 2^3 - 2^2 + 1 [ZMOD 3] := by
-          rel[ModEq.mul_left (-4) (ModEq.pow 3 h3),
-              ModEq.pow 2 h3]
+        ≡ -4 * 2^3 - 2^2 + 1 [ZMOD 3] := by rel[h3]
       _ ≡ 1 [ZMOD 3] := by rw[modEq_iff_dvd]; norm_num
   have contradiction := h_div.symm.trans h31
   rw [modEq_iff_dvd] at contradiction
@@ -587,28 +496,19 @@ theorem problem_25 (n : ℤ) : -2 * n^3 - 6 * n^2 + 2 * n + 9 ≡ 0 [ZMOD 3] := 
   have h1: n ≡ 0 [ZMOD 3] := h
   calc
     -2 * n^3 - 6 * n^2 + 2 * n + 9
-      ≡ -2 * 0^3 - 6 * 0^2 + 2 * 0 + 9 [ZMOD 3] := by
-        rel[ModEq.mul_left (-2) (ModEq.pow 3 h1),
-            ModEq.mul_left 6 (ModEq.pow 2 h1),
-            ModEq.mul_left 2 h1]
+      ≡ -2 * 0^3 - 6 * 0^2 + 2 * 0 + 9 [ZMOD 3] := by rel[h1]
     _ ≡ 0 [ZMOD 3] := by rw[modEq_iff_dvd]; norm_num
 
   have h2: n ≡ 1 [ZMOD 3] := h
   calc
     -2 * n^3 - 6 * n^2 + 2 * n + 9
-      ≡ -2 * 1^3 - 6 * 1^2 + 2 * 1 + 9 [ZMOD 3] := by
-        rel[ModEq.mul_left (-2) (ModEq.pow 3 h2),
-            ModEq.mul_left 6 (ModEq.pow 2 h2),
-            ModEq.mul_left 2 h2]
+      ≡ -2 * 1^3 - 6 * 1^2 + 2 * 1 + 9 [ZMOD 3] := by rel[h2]
     _ ≡ 0 [ZMOD 3] := by rw[modEq_iff_dvd]; norm_num
 
   have h3: n ≡ 2 [ZMOD 3] := h
   calc
     -2 * n^3 - 6 * n^2 + 2 * n + 9
-      ≡ -2 * 2^3 - 6 * 2^2 + 2 * 2 + 9 [ZMOD 3] := by
-        rel[ModEq.mul_left (-2) (ModEq.pow 3 h3),
-            ModEq.mul_left 6 (ModEq.pow 2 h3),
-            ModEq.mul_left 2 h3]
+      ≡ -2 * 2^3 - 6 * 2^2 + 2 * 2 + 9 [ZMOD 3] := by rel[h3]
     _ ≡ 0 [ZMOD 3] := by rw[modEq_iff_dvd]; norm_num
 
 theorem problem_26 (n : ℤ) : 3 ∣ (8 * n^5 + n - 9) := by
@@ -617,25 +517,19 @@ theorem problem_26 (n : ℤ) : 3 ∣ (8 * n^5 + n - 9) := by
   have h1: n ≡ 0 [ZMOD 3] := h
   calc
     8 * n^5 + n - 9
-      ≡ 8 * 0^5 + 0 - 9 [ZMOD 3] := by
-        rel[ModEq.mul_left 8 (ModEq.pow 5 h1),
-            h1]
+      ≡ 8 * 0^5 + 0 - 9 [ZMOD 3] := by rel[h1]
     _ ≡ 0 [ZMOD 3] := by rw[modEq_iff_dvd]; norm_num
 
   have h2: n ≡ 1 [ZMOD 3] := h
   calc
     8 * n^5 + n - 9
-      ≡ 8 * 1^5 + 1 - 9 [ZMOD 3] := by
-        rel[ModEq.mul_left 8 (ModEq.pow 5 h2),
-            h2]
+      ≡ 8 * 1^5 + 1 - 9 [ZMOD 3] := by rel[h2]
     _ ≡ 0 [ZMOD 3] := by rw[modEq_iff_dvd]; norm_num
 
   have h3: n ≡ 2 [ZMOD 3] := h
   calc
     8 * n^5 + n - 9
-      ≡ 8 * 2^5 + 2 - 9 [ZMOD 3] := by
-        rel[ModEq.mul_left 8 (ModEq.pow 5 h3),
-            h3]
+      ≡ 8 * 2^5 + 2 - 9 [ZMOD 3] := by rel[h3]
     _ ≡ 0 [ZMOD 3] := by rw[modEq_iff_dvd]; norm_num
 
 theorem problem_27 (n : ℤ) : 3 ∣ (n^2025 - n) := by
@@ -644,30 +538,25 @@ theorem problem_27 (n : ℤ) : 3 ∣ (n^2025 - n) := by
   have h1: n ≡ 0 [ZMOD 3] := h
   calc
     n^2025 - n
-      ≡ 0^2025 - 0 [ZMOD 3] := by
-        rel[ModEq.pow 2025 h1,
-            h1]
+      ≡ 0^2025 - 0 [ZMOD 3] := by rel[h1]
     _ ≡ 0 [ZMOD 3] := by rw[modEq_iff_dvd]; norm_num
 
   have h2: n ≡ 1 [ZMOD 3] := h
   calc
     n^2025 - n
-      ≡ 1^2025 - 1 [ZMOD 3] := by
-        rel[ModEq.pow 2025 h2,
-            h2]
+      ≡ 1^2025 - 1 [ZMOD 3] := by rel[h2]
     _ ≡ 0 [ZMOD 3] := by rw[modEq_iff_dvd]; norm_num
 
   have h3: n ≡ 2 [ZMOD 3] := h
   have h31: n^2 ≡ 1 [ZMOD 3] := by
     calc
-      n^2 ≡ 2^2 [ZMOD 3] := by rel[ModEq.pow 2 h3]
+      n^2 ≡ 2^2 [ZMOD 3] := by rel[h3]
       _ ≡ 1 [ZMOD 3] := by rw[modEq_iff_dvd]; norm_num
   calc
     n^2025 - n
       = (n^2)^1012 * n - n := by ring_nf
     _ ≡ 1^1012 * 2 - 2 [ZMOD 3] := by
-        rel[ModEq.pow 1012 h31,
-            h3]
+        rel[h31, h3]
     _ ≡ 0 [ZMOD 3] := by rw[modEq_iff_dvd]; norm_num
 
 theorem problem_28 (n : ℤ) : -5 * n^1696 + 8 * n^2 - 12 ≡ 0 [ZMOD 3] := by
@@ -676,29 +565,26 @@ theorem problem_28 (n : ℤ) : -5 * n^1696 + 8 * n^2 - 12 ≡ 0 [ZMOD 3] := by
   calc
     -5 * n^1696 + 8 * n^2 - 12
       ≡ -5 * 0^1696 + 8 * 0^2 - 12 [ZMOD 3] := by
-        rel[ModEq.mul_left (-5) (ModEq.pow 1696 h1),
-            ModEq.mul_left 8 (ModEq.pow 2 h1)]
+        rel[h1]
     _ ≡ 0 [ZMOD 3] := by rw[modEq_iff_dvd]; norm_num
 
   have h2: n ≡ 1 [ZMOD 3] := h
   calc
     -5 * n^1696 + 8 * n^2 - 12
       ≡ -5 * 1^1696 + 8 * 1^2 - 12 [ZMOD 3] := by
-        rel[ModEq.mul_left (-5) (ModEq.pow 1696 h2),
-            ModEq.mul_left 8 (ModEq.pow 2 h2)]
+        rel[h2]
     _ ≡ 0 [ZMOD 3] := by rw[modEq_iff_dvd]; norm_num
 
   have h3: n ≡ 2 [ZMOD 3] := h
   have h31: n^2 ≡ 1 [ZMOD 3] := by
     calc
-      n^2 ≡ 2^2 [ZMOD 3] := by rel[ModEq.pow 2 h3]
+      n^2 ≡ 2^2 [ZMOD 3] := by rel[h3]
       _ ≡ 1 [ZMOD 3] := by rw[modEq_iff_dvd]; norm_num
   calc
     -5 * n^1696 + 8 * n^2 - 12
       = -5 * (n^2)^848 + 8 * n^2 - 12 := by ring_nf
     _ ≡ -5 * 1^848 + 8 * 1 - 12 [ZMOD 3] := by
-        rel[ModEq.pow 848 h31,
-            ModEq.mul_left 8 h31]
+        rel[h31]
     _ ≡ 0 [ZMOD 3] := by rw[modEq_iff_dvd]; norm_num
 
 theorem problem_29 (n : ℤ) : ¬(3 ∣ (2 * n^4245 - 4 * n^9612 - 5)) := by
@@ -709,9 +595,7 @@ theorem problem_29 (n : ℤ) : ¬(3 ∣ (2 * n^4245 - 4 * n^9612 - 5)) := by
   have h11: 2 * n^4245 - 4 * n^9612 - 5 ≡ 1 [ZMOD 3] := by
     calc
       2 * n^4245 - 4 * n^9612 - 5
-        ≡ 2 * 0^4245 - 4 * 0^9612 - 5 [ZMOD 3] := by
-          rel[ModEq.mul_left 2 (ModEq.pow 4245 h1),
-              ModEq.mul_left 4 (ModEq.pow 9612 h1)]
+        ≡ 2 * 0^4245 - 4 * 0^9612 - 5 [ZMOD 3] := by rel[h1]
       _ ≡ 1 [ZMOD 3] := by rw[modEq_iff_dvd]; norm_num
   have contradiction := h_div.symm.trans h11
   rw [modEq_iff_dvd] at contradiction
@@ -721,9 +605,7 @@ theorem problem_29 (n : ℤ) : ¬(3 ∣ (2 * n^4245 - 4 * n^9612 - 5)) := by
   have h21: 2 * n^4245 - 4 * n^9612 - 5 ≡ 2 [ZMOD 3] := by
     calc
       2 * n^4245 - 4 * n^9612 - 5
-        ≡ 2 * 1^4245 - 4 * 1^9612 - 5 [ZMOD 3] := by
-          rel[ModEq.mul_left 2 (ModEq.pow 4245 h2),
-              ModEq.mul_left 4 (ModEq.pow 9612 h2)]
+        ≡ 2 * 1^4245 - 4 * 1^9612 - 5 [ZMOD 3] := by rel[h2]
       _ ≡ 2 [ZMOD 3] := by rw[modEq_iff_dvd]; norm_num
   have contradiction := h_div.symm.trans h21
   rw [modEq_iff_dvd] at contradiction
@@ -732,16 +614,13 @@ theorem problem_29 (n : ℤ) : ¬(3 ∣ (2 * n^4245 - 4 * n^9612 - 5)) := by
   have h3: n ≡ 2 [ZMOD 3] := h
   have h31: n^2 ≡ 1 [ZMOD 3] := by
     calc
-      n^2 ≡ 2^2 [ZMOD 3] := by rel[ModEq.pow 2 h3]
+      n^2 ≡ 2^2 [ZMOD 3] := by rel[h3]
       _ ≡ 1 [ZMOD 3] := by rw[modEq_iff_dvd]; norm_num
   have h32: 2 * n^4245 - 4 * n^9612 - 5 ≡ 1 [ZMOD 3] := by
     calc
       2 * n^4245 - 4 * n^9612 - 5
         = 2 * (n^2)^2122 * n - 4 * (n^2)^4806 - 5 := by ring_nf
-      _ ≡ 2 * 1^2122 * 2 - 4 * 1^4806 - 5 [ZMOD 3] := by
-          rel[ModEq.mul_left 2 (ModEq.pow 2122 h31),
-              ModEq.mul_left 4 (ModEq.pow 4806 h31),
-              h3]
+      _ ≡ 2 * 1^2122 * 2 - 4 * 1^4806 - 5 [ZMOD 3] := by rel[h31, h3]
       _ ≡ 1 [ZMOD 3] := by rw[modEq_iff_dvd]; norm_num
   have contradiction := h_div.symm.trans h32
   rw [modEq_iff_dvd] at contradiction
@@ -753,34 +632,95 @@ theorem problem_30 (n : ℤ) : -n^524 - n^708 + n^549 ≡ 0 [ZMOD 3] ∨ -n^524 
   left
   calc
     -n^524 - n^708 + n^549
-      ≡ -0^524 - 0^708 + 0^549 [ZMOD 3] := by
-        rel[ModEq.pow 524 h1,
-            ModEq.pow 708 h1,
-            ModEq.pow 549 h1]
+      ≡ -0^524 - 0^708 + 0^549 [ZMOD 3] := by rel[h1]
     _ ≡ 0 [ZMOD 3] := by rw[modEq_iff_dvd]; norm_num
 
   have h2: n ≡ 1 [ZMOD 3] := h
   right
   calc
     -n^524 - n^708 + n^549
-      ≡ -1^524 - 1^708 + 1^549 [ZMOD 3] := by
-        rel[ModEq.pow 524 h2,
-            ModEq.pow 708 h2,
-            ModEq.pow 549 h2]
+      ≡ -1^524 - 1^708 + 1^549 [ZMOD 3] := by rel[h2]
     _ ≡ 2 [ZMOD 3] := by rw[modEq_iff_dvd]; norm_num
 
   have h3: n ≡ 2 [ZMOD 3] := h
   left
   have h31: n^2 ≡ 1 [ZMOD 3] := by
     calc
-      n^2 ≡ 2^2 [ZMOD 3] := by rel[ModEq.pow 2 h3]
+      n^2 ≡ 2^2 [ZMOD 3] := by rel[h3]
       _ ≡ 1 [ZMOD 3] := by rw[modEq_iff_dvd]; norm_num
   calc
     -n^524 - n^708 + n^549
       = -(n^2)^262 - (n^2)^354 + (n^2)^274 * n := by ring_nf
-    _ ≡ -1^262 - 1^354 + 1^274 * 2 [ZMOD 3] := by
-        rel[ModEq.pow 262 h31,
-            ModEq.pow 354 h31,
-            ModEq.pow 274 h31,
-            h3]
+    _ ≡ -1^262 - 1^354 + 1^274 * 2 [ZMOD 3] := by rel[h31, h3]
     _ ≡ 0 [ZMOD 3] := by rw[modEq_iff_dvd]; norm_num
+
+theorem problem_31 (n : ℤ) : 3 ∣ (2 * n^3 + 1)*(-n^4 + 2 * n + 6) := by
+  rw [← modEq_zero_iff_dvd]
+  mod_cases h : n % 3
+  have h1: n ≡ 0 [ZMOD 3] := h
+  have h11: -n^4 + 2 * n + 6 ≡ 0 [ZMOD 3] := by
+    calc
+      -n^4 + 2 * n + 6
+        ≡ -0^4 + 2 * 0 + 6 [ZMOD 3] := by rel[h1]
+      _ ≡ 0 [ZMOD 3] := by rw[modEq_iff_dvd]; norm_num
+  calc
+    (2 * n^3 + 1)*(-n^4 + 2 * n + 6)
+      ≡ (2 * n^3 + 1)*0 [ZMOD 3] := by rel[h11]
+    _ ≡ 0 [ZMOD 3] := by norm_num
+
+  have h2: n ≡ 1 [ZMOD 3] := h
+  have h21: 2 * n^3 + 1 ≡ 0 [ZMOD 3] := by
+    calc
+      2 * n^3 + 1
+        ≡ 2 * 1^3 + 1 [ZMOD 3] := by rel[h2]
+      _ ≡ 0 [ZMOD 3] := by rw[modEq_iff_dvd]; norm_num
+  calc
+    (2 * n^3 + 1)*(-n^4 + 2 * n + 6)
+      ≡ 0*(-n^4 + 2 * n + 6) [ZMOD 3] := by rel[h21]
+    _ ≡ 0 [ZMOD 3] := by norm_num
+
+  have h3: n ≡ 2 [ZMOD 3] := h
+  have h31: -n^4 + 2 * n + 6 ≡ 0 [ZMOD 3] := by
+    calc
+      -n^4 + 2 * n + 6
+        ≡ -2^4 + 2 * 2 + 6 [ZMOD 3] := by rel[h3]
+      _ ≡ 0 [ZMOD 3] := by rw[modEq_iff_dvd]; norm_num
+  calc
+    (2 * n^3 + 1)*(-n^4 + 2 * n + 6)
+      ≡ (2 * n^3 + 1)*0 [ZMOD 3] := by rel[h31]
+    _ ≡ 0 [ZMOD 3] := by norm_num
+
+theorem problem_32 (n : ℤ): (-10 * n^5 + 3 * n^4 - 8) * (n^2 - 2 * n + 3) ≡ 0 [ZMOD 3] := by
+  mod_cases h : n % 3
+  have h1: n ≡ 0 [ZMOD 3] := h
+  have h11: n^2 - 2 * n + 3 ≡ 0 [ZMOD 3] := by
+    calc
+      n^2 - 2 * n + 3
+        ≡ 0^2 - 2 * 0 + 3 [ZMOD 3] := by rel[h1]
+      _ ≡ 0 [ZMOD 3] := by rw[modEq_iff_dvd]; norm_num
+  calc
+    (-10 * n^5 + 3 * n^4 - 8) * (n^2 - 2 * n + 3)
+      ≡ (-10 * n^5 + 3 * n^4 - 8) * 0 [ZMOD 3] := by rel[h11]
+    _ ≡ 0 [ZMOD 3] := by norm_num
+
+  have h2: n ≡ 1 [ZMOD 3] := h
+  have h21: -10 * n^5 + 3 * n^4 - 8 ≡ 0 [ZMOD 3] := by
+    calc
+      -10 * n^5 + 3 * n^4 - 8
+        ≡ -10 * 1^5 + 3 * 1^4 - 8 [ZMOD 3] := by rel[h2]
+      _ ≡ 0 [ZMOD 3] := by rw[modEq_iff_dvd]; norm_num
+  calc
+    (-10 * n^5 + 3 * n^4 - 8) * (n^2 - 2 * n + 3)
+      ≡ 0 * (n^2 - 2 * n + 3) [ZMOD 3] := by rel[h21]
+    _ ≡ 0 [ZMOD 3] := by norm_num
+
+  have h3: n ≡ 2 [ZMOD 3] := h
+  have h31: n^2 - 2 * n + 3 ≡ 0 [ZMOD 3] := by
+    calc
+      n^2 - 2 * n + 3
+        ≡ 2^2 - 2 * 2 + 3 [ZMOD 3] := by rel[h3]
+      _ ≡ 0 [ZMOD 3] := by rw[modEq_iff_dvd]; norm_num
+  calc
+    (-10 * n^5 + 3 * n^4 - 8) * (n^2 - 2 * n + 3)
+      ≡ (-10 * n^5 + 3 * n^4 - 8) * 0 [ZMOD 3] := by rel[h31]
+    _ ≡ 0 [ZMOD 3] := by norm_num
